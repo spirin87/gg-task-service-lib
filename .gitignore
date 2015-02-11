@@ -1,0 +1,9 @@
+/bin
+/target
+/build
+.project
+.classpath
+/.settings
+/.gradle
+/.bpmn
+/src/main/resources/hibernate.properties
