@@ -8,6 +8,8 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply from: 'dependencies.gradle'
+
 
 jar {
     baseName='gg-task-service-lib'
@@ -19,14 +21,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    compile("org.quartz-scheduler:quartz:2.2.1")
-    compile("org.quartz-scheduler:quartz-jobs:2.2.1")
-    compile("org.reflections:reflections:0.9.9")
-    compile("org.slf4j:slf4j-log4j12:1.7.10")
-    compile("log4j:log4j:1.2.17")
-}
-
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
@@ -35,15 +29,13 @@ configurations {
     providedRuntime
 }
 
-cleanEclipse {
-    delete ".settings"
+clean {
+    cleanEclipse
+    delete 'bin'
 }
 
-task fatJar(type: Jar) {
-    manifest {
-        attributes 'Main-Class': 'com.gost_group.gis_tek.task.Main'
-    }
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
+cleanEclipse {
+    delete '.settings'
+    delete '.project'
+    delete '.classpath'
 }
